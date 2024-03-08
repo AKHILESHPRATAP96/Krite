@@ -22,12 +22,12 @@ import InputBase from '@mui/material/InputBase';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 
-
 import FaceLogo from "../../assets/Appicon/FaceLogo.png"
 import NavButtons from '../../Components/DetailDisplayPannel/SelectNavButton';
 import DisplayDetails from '../../Components/DetailDisplayPannel/DisplayDetails';
 import DisplayFooter from '../../Components/DetailDisplayPannel/DisplayFooter';
 
+// Styled components for Search functionality
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     color: "black",
@@ -60,7 +60,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         [theme.breakpoints.up('sm')]: {
@@ -72,20 +71,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+// Width of the drawer
 const drawerWidth = 250;
 
-
+// Main component function
 export default function InovateHubApp() {
-
+    // State variables
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
-    const [navStatus, setNavstatus] = React.useState("")
+    const [navStatus, setNavstatus] = React.useState("");
     const [searchQuery, setSearchQuery] = React.useState('');
     const [Display, setDisplay] = React.useState(true);
 
+    // Theme and media query hooks
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
+    // Event handlers
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -100,6 +102,7 @@ export default function InovateHubApp() {
             setMobileOpen(!mobileOpen);
         }
     };
+
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -111,141 +114,75 @@ export default function InovateHubApp() {
         }, 100);
     }
 
+    // Drawer content
     const drawer = (
         <div style={{ border: "1px solid 1px rgb(228, 237, 230)", boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)", borderRadius: "4%" }}>
-
-
             <Grid container display="flex" justifyContent="space-around" alignItems="center" gap={1} >
                 <Box display="flex" alignItems="center" gap={1}>
-                    <img className='.small-image' src={AppIcon} style={{
-                        borderRadius: "30%",
-                        height: isSmallScreen ? '3vh' : "5vh"
-                    }} />
+                    <img className='.small-image' src={AppIcon} style={{ borderRadius: "30%", height: isSmallScreen ? '3vh' : "5vh" }} />
                     <Typography fontWeight={400} ><Typography fontSize="0.8rem" textAlign="start" color="gray">INC</Typography>InnovateHub</Typography>
                 </Box>
-                <img className='  .small-image' src={FaceLogo} style={{
-                    borderRadius: "30%",
-                    height: isSmallScreen ? '3vh' : "5vh"
-                }} />
-
+                <img className='  .small-image' src={FaceLogo} style={{ borderRadius: "30%", height: isSmallScreen ? '3vh' : "5vh" }} />
             </Grid>
             <Divider />
             <List >
+                {/* Component to create team */}
                 <CreateTeam handleClick={handleClick} />
             </List>
             <Divider />
+            {/* Component for folder items */}
             <FolderItem NavStatus={setNavstatus} />
+            {/* Component for footer */}
             <Footer />
-
-        </div >
+        </div>
     );
 
-
+    // Main render
     return (
         <Box style={{ border: "1px solid 1px rgb(228, 237, 230)", boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)", borderRadius: "4%" }} >
             <CssBaseline />
-            <AppBar position="relative"
-                sx={{
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                    ml: { sm: `${drawerWidth}px` },
-                    backgroundColor: "inherit",
-                    boxShadow: "0px 0px"
-                }}>
+            {/* App bar */}
+            <AppBar position="relative" sx={{ width: { sm: `calc(100% - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` }, backgroundColor: "inherit", boxShadow: "0px 0px" }}>
                 <Toolbar style={{ minHeight: '0px' }} >
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="black"
-                        aria-label="open drawer"
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                        onClick={handleDrawerToggle}
-
-                    >
+                    {/* Menu icon */}
+                    <IconButton size="large" edge="start" color="black" aria-label="open drawer" sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        fontWeight={700}
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: "black" }}
-                    >
+                    {/* Title */}
+                    <Typography fontWeight={700} variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, color: "black" }}>
                         {navStatus}
                     </Typography>
+                    {/* Search, Message and Settings icons */}
                     <Stack spacing={2} direction="row" alignItems="center">
                         <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
-
-                            <StyledInputBase
-
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                                onChange={handleSearchChange}
-                                sx={{ height: "4vh", boxShadow: "2px 2px rgb(0,0,1,0.1)" }}
-                            />
+                            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} onChange={handleSearchChange} sx={{ height: "4vh", boxShadow: "2px 2px rgb(0,0,1,0.1)" }} />
                         </Search>
                         <QuestionAnswerOutlinedIcon sx={{ boxShadow: "2px 2px rgb(0,0,1,0.1)", height: "3vh", borderRadius: "6px" }} color="action" />
                         <SettingsOutlinedIcon sx={{ boxShadow: "2px 2px rgb(0,0,1,0.1)", height: "3vh", borderRadius: "6px" }} color='action' />
                     </Stack>
-
                 </Toolbar>
                 <Divider sx={{ marginBottom: 1 }} />
+                {/* Navigation buttons */}
                 <NavButtons />
                 <Divider />
-            </AppBar >
-
-
-
-
-
-            <Box
-                component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-                aria-label="mailbox folders"
-            >
-
-                <Drawer
-
-                    variant="temporary"
-                    open={mobileOpen}
-                    onTransitionEnd={handleDrawerTransitionEnd}
-                    onClose={handleDrawerClose}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                        display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                    }}
-                >
-
+            </AppBar>
+            {/* Drawer */}
+            <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+                {/* Temporary Drawer */}
+                <Drawer variant="temporary" open={mobileOpen} onTransitionEnd={handleDrawerTransitionEnd} onClose={handleDrawerClose} ModalProps={{ keepMounted: true }} sx={{ display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth } }}>
                     {drawer}
-
                 </Drawer>
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        display: { xs: 'none', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                    }}
-                    open
-                >
+                {/* Permanent Drawer */}
+                <Drawer variant="permanent" sx={{ display: { xs: 'none', sm: 'block' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth } }} open>
                     {drawer}
-
                 </Drawer>
-
-
-
             </Box>
             {/* Main component */}
-
             {Display && <DisplayDetails searchQuery={searchQuery} />}
             <DisplayFooter />
-
-
-
         </Box>
     );
 }
